@@ -1,0 +1,98 @@
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+input {
+  border-radius: 4px;
+  border: 1px solid #000;
+  outline: none;
+  padding: 6px 16px;
+  margin-right: 10px;
+}
+
+button {
+  border-radius: 4px;
+  border: none;
+  padding: 4px 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff7fff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.container {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.inputArea {
+  text-align: center;
+}
+
+.inputBox {
+  margin-top: 20px;
+}
+
+.filterBtnList {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.filterBtnList li {
+  display: inline-block;
+  padding: 4px 16px;
+  font-size: 12px;
+  border: solid 1px #000;
+  cursor: pointer;
+}
+
+.filterBtnList li:not(:first-child) {
+  margin-left: 10px;
+}
+
+.todoList {
+  min-height: 60px;
+  margin-top: 30px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.todoList li {
+  padding: 15px 0;
+}
+
+.todoList li:not(:first-child) {
+  border-top: 1px solid #000;
+}
+
+.todoList li {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  width: 30%;
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.btn {
+  margin-left: 20px;
+}
+
+.btnCancel {
+  margin-left: 5px;
+}
