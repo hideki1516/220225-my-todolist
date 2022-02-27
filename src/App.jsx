@@ -85,13 +85,6 @@ export const App = () => {
                 </div>
             )}
 
-            <ul className='filterBtnList'>
-                <li>全てを表示</li>
-                <li>未着手</li>
-                <li>進行中</li>
-                <li>完了</li>
-            </ul>
-
             <ul className='todoList'>
                 {todos.map((todo, index) => (
                     <li key={index}>
