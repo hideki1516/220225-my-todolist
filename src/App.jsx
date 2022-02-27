@@ -15,7 +15,7 @@ export const App = () => {
     const handleAddFormSubmit = (e) => {
         e.preventDefault();
 
-        if(todoText !== '') {
+        if (todoText !== '') {
             const newTodos = [...todos, todoText];
             setTodos(newTodos);
         }
@@ -54,25 +54,17 @@ export const App = () => {
         setTodos(newTodos);
     };
 
-    // 進捗状況
-    const filterOptions = [
-        { value: 'all', label: '全て' },
-        { value: 'notStated', label: '未着手' },
-        { value: 'inProgress', label: '作業中' },
-        { value: 'done', label: '完了' },
-    ];
-    
     return (
         <div className='container'>
             {isEditing ? (
                 <div className='inputArea'>
                     <h1>Edit Todo</h1>
                     <form onSubmit={handleEditFormSubmit} className='inputBox'>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             placeholder='変更内容を入力'
                             value={currentTodo.text}
-                            onChange={onChangeEditTodoText}                            
+                            onChange={onChangeEditTodoText}
                         />
                         <button type="submit">更新</button>
                         <button onClick={() => setIsEditing(false)} className='btnCancel'>キャンセル</button>
@@ -82,8 +74,8 @@ export const App = () => {
                 <div className='inputArea'>
                     <h1>Add Todo</h1>
                     <form onSubmit={handleAddFormSubmit} className='inputBox'>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             placeholder='TODOを入力'
                             value={todoText}
                             onChange={onChangeTodoText}
@@ -93,12 +85,6 @@ export const App = () => {
                 </div>
             )}
 
-            {/* <select>
-                {filterOptions.map(( value, label ) => (
-                    <option value={value}>{label}</option>
-                ))}
-            </select> */}
-
             <ul className='filterBtnList'>
                 <li>全てを表示</li>
                 <li>未着手</li>
@@ -107,7 +93,7 @@ export const App = () => {
             </ul>
 
             <ul className='todoList'>
-                {todos.map(( todo, index ) => (
+                {todos.map((todo, index) => (
                     <li key={index}>
                         <div>#{index + 1}：　</div>
                         <div className='title'>{todo}</div>
