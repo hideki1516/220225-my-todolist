@@ -2,33 +2,34 @@ import React, { useState, useEffect } from 'react';
 import "./style.css";
 
 export const App = () => {
-    const [todos, setTodos] = useState([]);
-    const [todoText, setTodoText] = useState('');
-    const [isEditing, setIsEditing] = useState(false);
+    const [todoList, setTodoList] = useState([]);
+    const [todoTitle, setTodoTitle] = useState('');
     const [currentTodo, setCurrentTodo] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
 
     // 追加機能
     const onChangeTodoText = (e) => {
-        setTodoText(e.target.value);
+        setTodoTitle(e.target.value);
     }
 
     const handleAddFormSubmit = (e) => {
         e.preventDefault();
 
-        if (todoText !== '') {
-            const newTodos = [...todos, todoText];
-            setTodos(newTodos);
-        }
-
-        setTodoText('');
+        if (todoTitle === '') return;
+        const newTodoItems = [...todoList,
+        {
+            id: todoList.length,
+            title: todoTitle,
+        }];
+        setTodoList(newTodoItems);
+        setTodoTitle('');
     };
 
     // 削除機能
-    const onClickDelete = (index) => {
-        const newTodos = [...todos].filter((todo, todoIndex) => {
-            return todoIndex !== index;
-        });
-        setTodos(newTodos);
+    const onClickDelete = (id) => {
+        const removeItems = [...todoList];
+        removeItems.splice(id, 1);
+        setTodoList(removeItems);
     };
 
     // 編集機能
@@ -37,21 +38,22 @@ export const App = () => {
         setCurrentTodo({ ...todo });
     };
 
-    const onChangeEditTodoText = (e) => {
-        setCurrentTodo(e.target.value);
+    const handleEditInputChange = (e) => {
+        setCurrentTodo({ ...currentTodo, title: e.target.value });
     }
 
     const handleEditFormSubmit = (e) => {
         e.preventDefault();
         handleUpdateTodo(currentTodo.id, currentTodo);
+        console.log(currentTodo.id)
     };
 
     const handleUpdateTodo = (id, updatedTodo) => {
-        const newTodos = todos.map((todo) => {
+        const updatedItems = todoList.map((todo) => {
             return todo.id === id ? updatedTodo : todo;
         });
         setIsEditing(false);
-        setTodos(newTodos);
+        setTodoList(updatedItems);
     };
 
     return (
@@ -63,8 +65,8 @@ export const App = () => {
                         <input
                             type="text"
                             placeholder='変更内容を入力'
-                            value={currentTodo.text}
-                            onChange={onChangeEditTodoText}
+                            value={currentTodo.title}
+                            onChange={handleEditInputChange}
                         />
                         <button type="submit">更新</button>
                         <button onClick={() => setIsEditing(false)} className='btnCancel'>キャンセル</button>
@@ -77,7 +79,7 @@ export const App = () => {
                         <input
                             type="text"
                             placeholder='TODOを入力'
-                            value={todoText}
+                            value={todoTitle}
                             onChange={onChangeTodoText}
                         />
                         <button type="submit">追加</button>
@@ -93,12 +95,12 @@ export const App = () => {
             </ul>
 
             <ul className='todoList'>
-                {todos.map((todo, index) => (
-                    <li key={index}>
-                        <div>#{index + 1}：　</div>
-                        <div className='title'>{todo}</div>
+                {todoList.map((todo, id) => (
+                    <li key={id}>
+                        <div>#{id + 1}：　</div>
+                        <div className='title'>{todo.title}</div>
                         <button className='btn' onClick={() => onClickEdit(todo)}>編集</button>
-                        <button className='btn' onClick={() => onClickDelete(index)}>削除</button>
+                        <button className='btn' onClick={() => onClickDelete(id)}>削除</button>
                     </li>
                 ))}
             </ul>
