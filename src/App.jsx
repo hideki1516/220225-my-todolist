@@ -97,7 +97,7 @@ export const App = () => {
                     </form>
                 </div>
             )}
-
+            
             <div className='listArea'>
                 <select onChange={handleStatusSelectChange} className='select'>
                     {todoStatus.map((status) => (
