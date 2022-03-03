@@ -4,13 +4,19 @@ import "./style.css";
 export const App = () => {
     const [todoList, setTodoList] = useState([]);
     const [todoTitle, setTodoTitle] = useState('');
+    const [todoStatus, setTodoStatus] = useState([
+        { 'id': 1, 'text': '全て', 'value': 'all' },
+        { 'id': 2, 'text': '未着手', 'value': 'incomplete' },
+        { 'id': 3, 'text': '着手', 'value': 'inProgress' },
+        { 'id': 4, 'text': '完了', 'value': 'complete' },
+    ]);
     const [currentTodo, setCurrentTodo] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
     // 追加機能
-    const onChangeTodoText = (e) => {
+    const handleAddTodoTitle = (e) => {
         setTodoTitle(e.target.value);
-    }
+    };
 
     const handleAddFormSubmit = (e) => {
         e.preventDefault();
@@ -20,10 +26,16 @@ export const App = () => {
         {
             id: todoList.length,
             title: todoTitle,
+            status: todoStatus,
         }];
         setTodoList(newTodoItems);
         setTodoTitle('');
     };
+
+    const handleStatusSelectChange = (e) => {
+        // e.target.value に選択したvalueが渡ってくるのは分かるのですが...
+        // 例）完了を選択したら「e.target.value」には「complete」が渡される。
+    }
 
     // 削除機能
     const onClickDelete = (id) => {
@@ -45,7 +57,6 @@ export const App = () => {
     const handleEditFormSubmit = (e) => {
         e.preventDefault();
         handleUpdateTodo(currentTodo.id, currentTodo);
-        console.log(currentTodo.id)
     };
 
     const handleUpdateTodo = (id, updatedTodo) => {
@@ -80,30 +91,42 @@ export const App = () => {
                             type="text"
                             placeholder='TODOを入力'
                             value={todoTitle}
-                            onChange={onChangeTodoText}
+                            onChange={handleAddTodoTitle}
                         />
                         <button type="submit">追加</button>
                     </form>
                 </div>
             )}
 
-            <ul className='filterBtnList'>
-                <li>全てを表示</li>
-                <li>未着手</li>
-                <li>進行中</li>
-                <li>完了</li>
-            </ul>
+            <div className='listArea'>
+                <select onChange={handleStatusSelectChange} className='select'>
+                    {todoStatus.map((status) => (
+                        <option key={status.id} value={status.value}>
+                            {status.text}
+                        </option>
+                    ))}
+                </select>
 
-            <ul className='todoList'>
-                {todoList.map((todo, id) => (
-                    <li key={id}>
-                        <div>#{id + 1}：　</div>
-                        <div className='title'>{todo.title}</div>
-                        <button className='btn' onClick={() => onClickEdit(todo)}>編集</button>
-                        <button className='btn' onClick={() => onClickDelete(id)}>削除</button>
-                    </li>
-                ))}
-            </ul>
+                <ul className='todoList'>
+                    {todoList.map((todo, id) => (
+                        <li key={id}>
+                            <div>#{id + 1}：　</div>
+                            <div className='title'>{todo.title}</div>
+                            <div>
+                                <select onChange={handleStatusSelectChange}>
+                                    {todoStatus.map((status) => (
+                                        <option key={status.id} value={status.value}>
+                                            {status.text}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <button className='btn' onClick={() => onClickEdit(todo)}>編集</button>
+                            <button className='btn' onClick={() => onClickDelete(id)}>削除</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
